@@ -1,0 +1,33 @@
+package com.glqdlt.bookmanager;
+
+import com.glqdlt.bookmanager.persistence.entity.BookEntity;
+import com.glqdlt.bookmanager.persistence.repository.BookRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+@ComponentScan(basePackages = "com.glqdlt.bookmanager.*")
+@SpringBootApplication
+public class BookManagerApplication implements CommandLineRunner {
+
+    @Autowired
+    BookRepository bookRepository;
+
+    public static void main(String[] args) {
+        SpringApplication.run(BookManagerApplication.class, args);
+
+
+    }
+
+    @Override
+    public void run(String... strings) throws Exception {
+
+
+    }
+}
