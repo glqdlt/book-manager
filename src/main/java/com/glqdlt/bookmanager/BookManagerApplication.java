@@ -26,15 +26,16 @@ public class BookManagerApplication implements CommandLineRunner {
     @Override
     public void run(String... strings) throws Exception {
 
-        List<BookEntity> list = new ArrayList<>();
+        // 아래는 테스트 코드
+//        List<BookEntity> list = new ArrayList<>();
+//
+//        for (int i = 0; i < 100; i++)
+//            {list.add(
+//                    new BookEntity(
+//                     "subject" + i, "author" + i, 2, "note" + i, "path" + i, "server" + i,
+//                     "admin" + i, new Date(), new Date(), new Date(), 1, "thumb", "review"));
+//            }
 
-        for (int i = 0; i < 100; i++)
-            {list.add(
-                    new BookEntity(
-                     "subject" + i, "author" + i, 2, "note" + i, "path" + i, "server" + i,
-                     "admin" + i, new Date(), new Date(), new Date(), 1, "thumb", "review"));
-            }
-
-        bookRepository.save(list);
+//        bookRepository.save(list);
     }
 }
