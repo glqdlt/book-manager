@@ -2,6 +2,8 @@ package com.glqdlt.bookmanager.controller;
 
 import com.glqdlt.bookmanager.persistence.entity.BookEntity;
 import com.glqdlt.bookmanager.persistence.repository.BookRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -19,6 +21,7 @@ import java.util.Map;
 @RestController
 public class BookController {
 
+    private static final Logger log = LoggerFactory.getLogger(BookController.class);
     private static final Integer PAGE_COUNT = 10;
     /**
      * 토이 프로젝트라서 서비스 없이 바로 접근해서 조회,
@@ -48,7 +51,10 @@ public class BookController {
     }
 
     @RequestMapping(value = "/book/write", method = RequestMethod.PUT)
-    public ResponseEntity<Integer> bookWrite() {
+    public ResponseEntity<Integer> bookWrite(@RequestBody BookEntity bookEntity) {
+
+        bookRepository.save(bookEntity);
+
         return new ResponseEntity<>(1, HttpStatus.OK);
     }
 }
