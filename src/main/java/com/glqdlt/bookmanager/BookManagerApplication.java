@@ -21,13 +21,19 @@ public class BookManagerApplication implements CommandLineRunner {
 
     public static void main(String[] args) {
         SpringApplication.run(BookManagerApplication.class, args);
-
-
     }
 
     @Override
     public void run(String... strings) throws Exception {
 
+        List<BookEntity> list = new ArrayList<>();
+
+        for (int i = 0; i < 999; i++) {
+            list.add(
+                    new BookEntity(
+                            "subject" + i, "author" + i, 2, "note" + i, "path" + i, "server1" + i, "admin" + i, new Date(), new Date(), new Date(), 1, "thumb", "review"));
+        }
+        bookRepository.save(list);
 
     }
 }
