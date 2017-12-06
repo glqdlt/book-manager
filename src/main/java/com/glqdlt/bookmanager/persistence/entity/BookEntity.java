@@ -16,7 +16,10 @@ import java.util.Date;
 @NoArgsConstructor
 @Data
 public class BookEntity {
-    public BookEntity(String subject, String author, int book_type, String note, String path, String server_name, String reg_id, Date future_date, Date reg_date, Date update_date, int read_status, String thumbnail_url, String review_url) {
+    public BookEntity
+        (String subject, String author, int book_type, String note, String path, String server_name,String reg_id, Date future_date,
+                      Date reg_date, Date update_date, int read_status, String thumbnail_url, String review_url)
+    {
         this.subject = subject;
         this.author = author;
         this.book_type = book_type;
@@ -42,14 +45,11 @@ public class BookEntity {
     private String note;
     private String path;
     private String server_name;
-
     private String reg_id;
     private Date future_date;
     private Date reg_date;
     private Date update_date;
-
     private int read_status;
     private String thumbnail_url;
     private String review_url;
-
 }
