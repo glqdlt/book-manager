@@ -28,10 +28,10 @@ public class BookManagerApplication implements CommandLineRunner {
 
         List<BookEntity> list = new ArrayList<>();
 
-        for (int i = 0; i < 999; i++) {
+        for (int i = 0; i < 100; i++) {
             list.add(
                     new BookEntity(
-                            "subject" + i, "author" + i, 2, "note" + i, "path" + i, "server1" + i, "admin" + i, new Date(), new Date(), new Date(), 1, "thumb", "review"));
+                            "subject" + i, "author" + i, 2, "note" + i, "path" + i, "server" + i, "admin" + i, new Date(), new Date(), new Date(), 1, "thumb", "review"));
         }
         bookRepository.save(list);
 
