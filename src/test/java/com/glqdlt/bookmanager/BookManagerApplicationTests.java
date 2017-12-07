@@ -54,4 +54,12 @@ public class BookManagerApplicationTests {
 		Assert.assertNotSame(mockHttpServletResponse.getContentAsString().length(),0);
 	}
 
+	@Test
+	public void BookSearchPage() throws Exception {
+		MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/book/search/1")).andReturn();
+		MockHttpServletResponse mockHttpServletResponse =result.getResponse();
+		log.info(mockHttpServletResponse.getContentAsString());
+
+	}
+
 }
