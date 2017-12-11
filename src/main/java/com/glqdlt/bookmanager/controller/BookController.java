@@ -34,19 +34,26 @@ public class BookController {
     }
 
     @RequestMapping(value = "/book/search/{page}", method = RequestMethod.GET)
-    public ResponseEntity<Map<String, Object>> bookSearchPage(@PathVariable Integer page) {
+    public ResponseEntity<Map<String, Object>> bookSearchPage(@PathVariable int page) {
         Pageable pageable = new PageRequest(page, PAGE_COUNT, new Sort(Sort.Direction.DESC, "no"));
-        Page<BookEntity> p1 = bookRepository.findAll(pageable);
+        Page<BookEntity> entityPage = bookRepository.findAll(pageable);
 
         List<BookEntity> list = new ArrayList<>();
         // 이것은 좋지 않다. 테스트용이니 여유 될 때
         // fixme map -> Object
         Map<String, Object> map = new HashMap<>();
-            p1.forEach(x -> list.add(x));
-        map.put("count", p1.getTotalPages());
+            entityPage.forEach(x -> list.add(x));
+        map.put("totalPage", entityPage.getTotalPages());
         map.put("data", list);
 
         return new ResponseEntity<>(map, HttpStatus.OK);
+    }
+
+    @RequestMapping(value="/book/detail/{id}", method = RequestMethod.GET)
+    public ResponseEntity<BookEntity> bookDetail(@PathVariable int id){
+        BookEntity bookEntity= bookRepository.findOne(id);
+
+        return new ResponseEntity<>(bookEntity,HttpStatus.OK);
     }
 
     @RequestMapping(value = "/book/write", method = RequestMethod.PUT)
