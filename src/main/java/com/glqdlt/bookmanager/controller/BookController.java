@@ -51,6 +51,7 @@ public class BookController {
 
     @RequestMapping(value = "/book/write", method = RequestMethod.PUT)
     public ResponseEntity<Integer> bookWrite(@RequestBody BookEntity bookEntity) {
+        log.info(bookEntity.toString());
         bookRepository.save(bookEntity);
         return new ResponseEntity<>(1, HttpStatus.OK);
     }
