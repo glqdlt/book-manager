@@ -38,6 +38,8 @@ public class BookController {
         Pageable pageable = new PageRequest(page, PAGE_COUNT, new Sort(Sort.Direction.DESC, "no"));
         Page<BookEntity> entityPage = bookRepository.findAll(pageable);
 
+
+
         List<BookEntity> list = new ArrayList<>();
         // 이것은 좋지 않다. 테스트용이니 여유 될 때
         // fixme map -> Object
@@ -52,6 +54,8 @@ public class BookController {
     @RequestMapping(value="/book/detail/{id}", method = RequestMethod.GET)
     public ResponseEntity<BookEntity> bookDetail(@PathVariable int id){
         BookEntity bookEntity= bookRepository.findOne(id);
+
+
 
         return new ResponseEntity<>(bookEntity,HttpStatus.OK);
     }

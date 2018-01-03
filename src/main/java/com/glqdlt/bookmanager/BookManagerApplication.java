@@ -24,7 +24,7 @@ public class BookManagerApplication implements CommandLineRunner {
     }
 
     @Override
-    public void run(String... strings) throws Exception {
+    public void run(String... strings) {
 
 //         아래는 테스트 코드
         List<BookEntity> list = new ArrayList<>();
