@@ -41,4 +41,7 @@ public interface BookRepository extends JpaRepository<BookEntity, Integer> {
             @Param("review_url") String review_url);
 
 
+    @Transactional
+    void deleteByNo(@Param("no") int no);
+
 }

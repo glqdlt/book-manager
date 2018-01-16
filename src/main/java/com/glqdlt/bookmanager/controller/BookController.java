@@ -73,4 +73,10 @@ public class BookController {
                 bookEntity.getThumbnail_url(),bookEntity.getReview_url());
         return  new ResponseEntity<>(1, HttpStatus.OK);
     }
+
+    @RequestMapping(value ="/book/remove/{id}", method =  RequestMethod.DELETE)
+    public ResponseEntity<Integer> bookRemove(@PathVariable int id){
+        bookRepository.deleteByNo(id);
+        return new ResponseEntity<>(1, HttpStatus.OK);
+    }
 }
