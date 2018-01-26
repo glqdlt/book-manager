@@ -47,4 +47,7 @@ public interface BookRepository extends JpaRepository<BookEntity, Integer> {
 
     @Query("select b.subject from BookEntity b")
     List<String> findSubjects();
+
+    @Query("select b from BookEntity b where b.subject = :subject")
+    List<BookEntity> findAllBySubject(@Param("subject") String subject);
 }

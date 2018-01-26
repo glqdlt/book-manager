@@ -125,4 +125,10 @@ public class BookController {
 
         return new ResponseEntity<>(this.bookRepository.findSubjects(),HttpStatus.OK);
     }
+
+    @RequestMapping(value = "/search/subject/{subject}",method=RequestMethod.GET)
+    public ResponseEntity<List<BookEntity>> searchBySubject(@PathVariable String subject){
+        return new ResponseEntity<>(this.bookRepository.findAllBySubject(subject), HttpStatus.OK);
+
+    }
 }
