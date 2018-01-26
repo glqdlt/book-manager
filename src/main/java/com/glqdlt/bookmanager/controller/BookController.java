@@ -5,14 +5,24 @@ import com.glqdlt.bookmanager.persistence.repository.BookRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.*;
 
 @CrossOrigin
@@ -65,18 +75,48 @@ public class BookController {
         return new ResponseEntity<>(1, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/book/update/{id}", method= RequestMethod.PUT)
-    public ResponseEntity<Integer> bookUpdate(@PathVariable int id, @RequestBody BookEntity bookEntity){
+    @RequestMapping(value = "/book/update/{id}", method = RequestMethod.PUT)
+    public ResponseEntity<Integer> bookUpdate(@PathVariable int id, @RequestBody BookEntity bookEntity) {
         log.info((bookEntity.toString()));
-        bookRepository.updateBookEntity(id,bookEntity.getSubject(),bookEntity.getAuthor(),bookEntity.getBook_type(),bookEntity.getNote(),bookEntity
-                .getPath(),bookEntity.getServer_name(),bookEntity.getFuture_date(),bookEntity.getUpdate_date(),bookEntity.getRead_status(),
-                bookEntity.getThumbnail_url(),bookEntity.getReview_url());
-        return  new ResponseEntity<>(1, HttpStatus.OK);
+        bookRepository.updateBookEntity(id, bookEntity.getSubject(), bookEntity.getAuthor(), bookEntity.getBook_type(), bookEntity.getNote(), bookEntity
+                        .getPath(), bookEntity.getServer_name(), bookEntity.getFuture_date(), bookEntity.getUpdate_date(), bookEntity.getRead_status(),
+                bookEntity.getThumbnail_url(), bookEntity.getReview_url());
+        return new ResponseEntity<>(1, HttpStatus.OK);
     }
 
-    @RequestMapping(value ="/book/remove/{id}", method =  RequestMethod.DELETE)
-    public ResponseEntity<Integer> bookRemove(@PathVariable int id){
+    @RequestMapping(value = "/book/remove/{id}", method = RequestMethod.DELETE)
+    public ResponseEntity<Integer> bookRemove(@PathVariable int id) {
         bookRepository.deleteByNo(id);
         return new ResponseEntity<>(1, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/book/download/{id}", method = RequestMethod.GET)
+    public ResponseEntity<Object> bookDownload(@PathVariable int id) throws IOException {
+
+        String path = "C:\\Users\\iw.jhun\\Downloads\\d3.zip";
+        File file = new File(path);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.MULTIPART_FORM_DATA);
+        headers.setContentLength(file.length());
+        headers.setContentDispositionFormData("attachment", URLEncoder.encode(file.getName(), "UTF-8"));
+        ByteArrayResource byteArrayResource = new ByteArrayResource(Files.readAllBytes(Paths.get(file.getAbsolutePath())));
+
+        return new ResponseEntity<>(byteArrayResource, headers, HttpStatus.OK);
+    }
+
+    @RequestMapping("/upload")
+    public class FileUploadController {
+
+        @RequestMapping(method = RequestMethod.POST)
+        public ResponseEntity handleFileUpload(
+                @RequestParam("user-file") MultipartFile multipartFile) throws IOException {
+            String name = multipartFile.getOriginalFilename();
+            System.out.println("File name: "+name);
+            //todo save to a file via multipartFile.getInputStream()
+            byte[] bytes = multipartFile.getBytes();
+            System.out.println("File uploaded content:\n" + new String(bytes));
+            return new ResponseEntity(HttpStatus.OK);
+        }
     }
 }
