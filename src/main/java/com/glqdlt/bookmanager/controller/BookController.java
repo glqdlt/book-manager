@@ -19,11 +19,13 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @CrossOrigin
 @RestController
@@ -93,6 +95,7 @@ public class BookController {
     @RequestMapping(value = "/book/download/{id}", method = RequestMethod.GET)
     public ResponseEntity<Object> bookDownload(@PathVariable int id) throws IOException {
 
+        // FIXME 실제 데이터베이스에 id 조회를 해서 다운로드 경로를 얻어 오는 로직이 필요하다.
         String path = "C:\\Users\\iw.jhun\\Downloads\\d3.zip";
         File file = new File(path);
 
