@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
+import java.util.List;
 
 public interface BookRepository extends JpaRepository<BookEntity, Integer> {
 
@@ -44,4 +45,6 @@ public interface BookRepository extends JpaRepository<BookEntity, Integer> {
     @Transactional
     void deleteByNo(@Param("no") int no);
 
+    @Query("select b.subject from BookEntity b")
+    List<String> findSubjects();
 }
