@@ -59,7 +59,6 @@ public class BookController {
         map.put("totalPage", entityPage.getTotalPages());
         map.put("data", list);
 
-        map.forEach((x, y) -> System.out.println(y));
         return new ResponseEntity<>(map, HttpStatus.OK);
     }
 
