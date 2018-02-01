@@ -1,4 +1,4 @@
-package com.glqdlt.bookmanager.controller;
+package com.glqdlt.bookmanager.api;
 
 import com.glqdlt.bookmanager.persistence.entity.BookEntity;
 import com.glqdlt.bookmanager.persistence.repository.BookRepository;
@@ -20,9 +20,9 @@ import java.util.Map;
 
 @RestController
 @CrossOrigin
-public class JqueryDataTableController {
+public class TestDataTableRestController {
 
-    private static final Logger log = LoggerFactory.getLogger(JqueryDataTableController.class);
+    private static final Logger log = LoggerFactory.getLogger(TestDataTableRestController.class);
 
     @Autowired
     BookRepository bookRepository;

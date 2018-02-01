@@ -1,6 +1,6 @@
 package com.glqdlt.bookmanager;
 
-import com.glqdlt.bookmanager.controller.BookController;
+import com.glqdlt.bookmanager.api.BookRestController;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -30,13 +30,13 @@ public class BookManagerApplicationTests {
 
 	@Autowired
 	@InjectMocks
-	private BookController bookController;
+	private BookRestController bookRestController;
 	private MockMvc mockMvc;
 
 	@Before
 	public void init(){
 		MockitoAnnotations.initMocks(this);
-		mockMvc = MockMvcBuilders.standaloneSetup(bookController).build();
+		mockMvc = MockMvcBuilders.standaloneSetup(bookRestController).build();
 	}
 
 	@Test
