@@ -30,8 +30,6 @@ public class TestDataTableRestController {
     @RequestMapping(value = "/jquery/data/", method = RequestMethod.POST)
     public ResponseEntity<Map<String, Object>> jqueryAll(@RequestParam int draw, @RequestParam int length,
                                                          @RequestParam int start, @RequestParam Object searchForm) {
-        log.info(start+"");
-        log.info(searchForm.toString());
         int page = 0;
         if (start != 0) {
             page = (start / length);

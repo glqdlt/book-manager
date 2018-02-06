@@ -96,7 +96,7 @@ public class BookRestController {
     public ResponseEntity<Object> bookDownload(@PathVariable int id) throws IOException {
 
         // FIXME 실제 데이터베이스에 id 조회를 해서 다운로드 경로를 얻어 오는 로직이 필요하다.
-        String path = "C:\\Users\\iw.jhun\\Downloads\\d3.zip";
+        String path = "C:\\Users\\iw.jhun\\Downloads\\curl-7.58.0.zip";
         File file = new File(path);
 
         HttpHeaders headers = new HttpHeaders();
