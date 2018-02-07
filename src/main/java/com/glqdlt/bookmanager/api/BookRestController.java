@@ -125,7 +125,7 @@ public class BookRestController {
                 .toString();
 
 
-        Path path = Paths.get("\u202AC:\\Users\\iw.jhun\\Desktop\\Angular_second.pptx");
+        Path path = Paths.get("C:\\Users\\iw.jhun\\Desktop","Angular_second.pptx");
         byte[] data = Files.readAllBytes(path);
 
         String sha256hexOrign = Hashing.sha256()
