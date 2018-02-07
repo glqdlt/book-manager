@@ -40,7 +40,7 @@ public class TestDataTableRestController {
         List<BookEntity> data = new ArrayList<>();
         entityPage.forEach(x -> data.add(x));
 
-        log.info("totalPages:"+entityPage.getTotalPages()+", total elements: "+entityPage.getTotalElements());
+        log.debug("totalPages:"+entityPage.getTotalPages()+", total elements: "+entityPage.getTotalElements());
         map.put("draw", draw);
         map.put("recordsFiltered", entityPage.getTotalPages());
         map.put("recordsTotal", entityPage.getTotalElements());

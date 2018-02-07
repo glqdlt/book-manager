@@ -18,7 +18,6 @@ public class H2ServerConfiguration {
     @Value("${h2.web.port:8082}")
     private String h2WebPort;
 
-    //Server 가 왜 안잡히나 했더니 Maven Pom에서 H2 의 구동 scope가 runtime으로만 되어 있어서 메소드가 안잡혔었음 ㅡㅡ;
     @Bean
     @ConditionalOnExpression("${h2.tcp.enabled:true}")
     public Server h2TcpServer() throws SQLException {

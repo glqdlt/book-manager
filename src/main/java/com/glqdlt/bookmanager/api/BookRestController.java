@@ -112,16 +112,15 @@ public class BookRestController {
     public ResponseEntity handleFileUpload(
             @RequestParam("user-file") MultipartFile multipartFile) throws IOException {
         String name = multipartFile.getOriginalFilename();
-        System.out.println("File name: " + name);
+        log.debug("File name: " + name);
         //todo save to a file via multipartFile.getInputStream()
         byte[] bytes = multipartFile.getBytes();
-        System.out.println("File uploaded content:\n" + new String(bytes));
+        log.debug("File uploaded content:\n" + new String(bytes));
         return new ResponseEntity(HttpStatus.OK);
     }
 
     @RequestMapping(value = "/search/tags/all", method = RequestMethod.GET)
     public ResponseEntity<Object> addTags(){
-
         return new ResponseEntity<>(this.bookRepository.findSubjects(),HttpStatus.OK);
     }
 
