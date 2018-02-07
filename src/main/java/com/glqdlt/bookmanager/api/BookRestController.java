@@ -122,7 +122,7 @@ public class BookRestController {
 
 
 
-        // TODO resoure nio auto-close 필요
+        // TODO resoure nio auto-close 필요? 안한듯?
         String sha256hex = Hashing.sha256()
                 .hashBytes(bytes)
                 .toString();
@@ -131,12 +131,16 @@ public class BookRestController {
         Path path = Paths.get("C:\\Users\\iw.jhun\\Desktop","Angular_second.pptx");
         byte[] data = Files.readAllBytes(path);
 
+
+        // 아래는 google의 guava 라이브러리를 쓴다
         String sha256hexOrign = Hashing.sha256()
                 .hashBytes(data)
                 .toString();
 
         log.debug("sha256 hex :"+sha256hex+", sha origin : "+sha256hexOrign);
 
+//        java nio 에 대해서는.. 아래를 참고
+//        http://palpit.tistory.com/640
 //        http://www.baeldung.com/guava-write-to-file-read-from-file
         File file = new File("c:/Users/iw.jhun/Desktop/");
 
