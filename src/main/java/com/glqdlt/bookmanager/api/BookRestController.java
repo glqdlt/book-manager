@@ -2,6 +2,7 @@ package com.glqdlt.bookmanager.api;
 
 import com.glqdlt.bookmanager.persistence.entity.BookEntity;
 import com.glqdlt.bookmanager.persistence.repository.BookRepository;
+import com.google.common.base.Charsets;
 import com.google.common.hash.Hashing;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -120,6 +121,8 @@ public class BookRestController {
         log.debug("File name: " + name);
 
 
+
+        // TODO resoure nio auto-close 필요
         String sha256hex = Hashing.sha256()
                 .hashBytes(bytes)
                 .toString();
@@ -133,6 +136,15 @@ public class BookRestController {
                 .toString();
 
         log.debug("sha256 hex :"+sha256hex+", sha origin : "+sha256hexOrign);
+
+//        http://www.baeldung.com/guava-write-to-file-read-from-file
+        File file = new File("c:/Users/iw.jhun/Desktop/");
+
+
+        Path p = Paths.get("c:/users/iw.jhun/Desktop",sha256hex);
+
+        Files.write(p,bytes);
+
 
         return new ResponseEntity(HttpStatus.OK);
     }
