@@ -46,4 +46,6 @@ public class BookEntity {
     private String thumbnail_url;
     @NonNull
     private String review_url;
+
+    private String file_orign_name;
 }
