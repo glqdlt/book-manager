@@ -14,9 +14,9 @@ public class BookController {
             LoggerFactory.getLogger(BookController.class);
 
 
-    @RequestMapping(value = "/grid",method = RequestMethod.GET)
+    @RequestMapping(value = "/list",method = RequestMethod.GET)
     public String dataGrid(){
-        return "book/dataGrid";
+        return "book/dataTable";
     }
 
     @RequestMapping(value ="/new",method = RequestMethod.GET)
