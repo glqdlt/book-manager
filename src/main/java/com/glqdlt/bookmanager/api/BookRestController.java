@@ -2,6 +2,7 @@ package com.glqdlt.bookmanager.api;
 
 import com.glqdlt.bookmanager.persistence.entity.BookEntity;
 import com.glqdlt.bookmanager.persistence.repository.BookRepository;
+import com.google.common.hash.Hashing;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,16 +19,18 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.net.URLEncoder;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@RequestMapping("/book")
+@RequestMapping("/api/book")
 @CrossOrigin
 @RestController
 public class BookRestController {
@@ -110,12 +113,27 @@ public class BookRestController {
 
     @RequestMapping(value = "/upload", method = RequestMethod.POST)
     public ResponseEntity handleFileUpload(
-            @RequestParam("user-file") MultipartFile multipartFile) throws IOException {
+            @RequestParam("attach-file") MultipartFile multipartFile) throws IOException {
         String name = multipartFile.getOriginalFilename();
-        log.debug("File name: " + name);
-        //todo save to a file via multipartFile.getInputStream()
         byte[] bytes = multipartFile.getBytes();
-        log.debug("File uploaded content:\n" + new String(bytes));
+        //todo save to a file via multipartFile.getInputStream()
+        log.debug("File name: " + name);
+
+
+        String sha256hex = Hashing.sha256()
+                .hashBytes(bytes)
+                .toString();
+
+
+        Path path = Paths.get("\u202AC:\\Users\\iw.jhun\\Desktop\\Angular_second.pptx");
+        byte[] data = Files.readAllBytes(path);
+
+        String sha256hexOrign = Hashing.sha256()
+                .hashBytes(data)
+                .toString();
+
+        log.debug("sha256 hex :"+sha256hex+", sha origin : "+sha256hexOrign);
+
         return new ResponseEntity(HttpStatus.OK);
     }
 

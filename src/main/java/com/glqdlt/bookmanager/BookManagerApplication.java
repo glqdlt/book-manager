@@ -26,7 +26,6 @@ public class BookManagerApplication implements CommandLineRunner {
     @Override
     public void run(String... strings) {
 
-//         아래는 테스트 코드
         List<BookEntity> list = new ArrayList<>();
         for (int i = 0; i < 100; i++) {
             list.add(

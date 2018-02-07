@@ -15,7 +15,5 @@ public class ServerConfigEntity {
     @Id
     @GeneratedValue
     private Integer no;
-
-    private String upload_path;
-
+    private String data_path;
 }

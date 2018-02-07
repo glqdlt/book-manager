@@ -1,19 +1,27 @@
 package com.glqdlt.bookmanager.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-@Controller("/book")
+@RequestMapping("/book")
+@Controller
 public class BookController {
 
-    @RequestMapping(value = "/data-grid",method = RequestMethod.GET)
+    private static final Logger log =
+            LoggerFactory.getLogger(BookController.class);
+
+
+    @RequestMapping(value = "/grid",method = RequestMethod.GET)
     public String dataGrid(){
-        return "book/data-grid";
+        return "book/dataGrid";
     }
 
-    @RequestMapping(value ="/new-item",method = RequestMethod.GET)
+    @RequestMapping(value ="/new",method = RequestMethod.GET)
     public String newItem(){
-        return "book/new-item";
+        log.debug("call book new");
+        return "book/newBook";
     }
 }
