@@ -1,6 +1,7 @@
 package com.glqdlt.bookmanager.service;
 
 import com.google.common.hash.Hashing;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -9,9 +10,9 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
+@Slf4j
 @Service
 public class FileHandlerUtil {
-    private static final Logger log = LoggerFactory.getLogger(FileHandlerUtil.class);
 
     // 아래는 google의 guava 라이브러리를 쓴다
     public String byteToStringSha256(byte[] bytes) {

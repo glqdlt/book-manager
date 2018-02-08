@@ -1,27 +1,30 @@
 package com.glqdlt.bookmanager.controller;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+@Slf4j
 @RequestMapping("/book")
 @Controller
 public class BookController {
 
-    private static final Logger log =
-            LoggerFactory.getLogger(BookController.class);
-
+    private final String VIEW_PREFIX = "book/";
 
     @RequestMapping(value = "/list",method = RequestMethod.GET)
-    public String dataGrid(){
-        return "book/dataTable";
+    public String listBook(){
+        return VIEW_PREFIX +"book_list";
     }
 
     @RequestMapping(value ="/new",method = RequestMethod.GET)
-    public String newItem(){
-        log.debug("call book new");
-        return "book/newBook";
+    public String createBook(){
+        return VIEW_PREFIX +"book_create";
+    }
+
+
+    @RequestMapping(value = "/config",method=RequestMethod.GET)
+    public String bookConfig(){
+        return VIEW_PREFIX +"config";
     }
 }

@@ -3,6 +3,7 @@ package com.glqdlt.bookmanager.api;
 import com.glqdlt.bookmanager.persistence.entity.BookEntity;
 import com.glqdlt.bookmanager.persistence.repository.BookRepository;
 import com.glqdlt.bookmanager.service.FileHandlerUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,12 +30,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Slf4j
 @RequestMapping("/api/book")
 @CrossOrigin
 @RestController
 public class BookRestController {
 
-    private static final Logger log = LoggerFactory.getLogger(BookRestController.class);
     private static final Integer PAGE_COUNT = 10;
     /**
      * 토이 프로젝트라서 서비스 없이 바로 접근해서 조회,
