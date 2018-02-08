@@ -12,6 +12,7 @@
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote-lite.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote-lite.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/lang/summernote-ko-KR.js"></script>
 
 </head>
 
@@ -35,11 +36,13 @@
     </div>
 </div>
 
+
 <!-- https://summernote.org/getting-started/#simple-example -->
 <script>
     $('#summernote').summernote({
         tabsize: 2,
-        height: 100
+        height: 100,
+        lang : 'ko-KR'
     });
 
     function editorSave() {
