@@ -14,14 +14,13 @@ public class BookController {
 
     @RequestMapping(value = "/list",method = RequestMethod.GET)
     public String listBook(){
-        return VIEW_PREFIX +"book_list";
+        return VIEW_PREFIX +"list";
     }
 
-    @RequestMapping(value ="/new",method = RequestMethod.GET)
+    @RequestMapping(value ="/create",method = RequestMethod.GET)
     public String createBook(){
-        return VIEW_PREFIX +"book_create";
+        return VIEW_PREFIX +"create";
     }
-
 
     @RequestMapping(value = "/config",method=RequestMethod.GET)
     public String bookConfig(){

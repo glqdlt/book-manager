@@ -2,10 +2,8 @@ package com.glqdlt.bookmanager.api;
 
 import com.glqdlt.bookmanager.persistence.entity.BookEntity;
 import com.glqdlt.bookmanager.persistence.repository.BookRepository;
-import com.glqdlt.bookmanager.service.FileHandlerUtil;
+import com.glqdlt.bookmanager.service.FileHandlingUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.data.domain.Page;
@@ -44,16 +42,16 @@ public class BookRestController {
     BookRepository bookRepository;
 
     @Autowired
-    FileHandlerUtil handler;
+    FileHandlingUtil handler;
 
     @RequestMapping(value = "/search/all", method = RequestMethod.GET)
-    public ResponseEntity<List<BookEntity>> bookSearch() {
+    public ResponseEntity<List<BookEntity>> getBookSelectAll() {
         List<BookEntity> list = bookRepository.findAll();
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/search/{page}", method = RequestMethod.GET)
-    public ResponseEntity<Map<String, Object>> bookSearchPage(@PathVariable int page) {
+    public ResponseEntity<Map<String, Object>> getBookSelectAllByPage(@PathVariable int page) {
         log.info("page:" + page);
         Pageable pageable = new PageRequest(page, PAGE_COUNT, new Sort(Sort.Direction.DESC, "no"));
         Page<BookEntity> entityPage = bookRepository.findAll(pageable);
@@ -69,7 +67,7 @@ public class BookRestController {
     }
 
     @RequestMapping(value = "/detail/{id}", method = RequestMethod.GET)
-    public ResponseEntity<BookEntity> bookDetail(@PathVariable int id) {
+    public ResponseEntity<BookEntity> getBookSelectDetailById(@PathVariable int id) {
         BookEntity bookEntity = bookRepository.findOne(id);
 
 
@@ -77,14 +75,14 @@ public class BookRestController {
     }
 
     @RequestMapping(value = "/write", method = RequestMethod.PUT)
-    public ResponseEntity<Integer> bookWrite(@RequestBody BookEntity bookEntity) {
+    public ResponseEntity<Integer> putBookCreate(@RequestBody BookEntity bookEntity) {
         log.info(bookEntity.toString());
         bookRepository.save(bookEntity);
         return new ResponseEntity<>(1, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/update/{id}", method = RequestMethod.PUT)
-    public ResponseEntity<Integer> bookUpdate(@PathVariable int id, @RequestBody BookEntity bookEntity) {
+    public ResponseEntity<Integer> putBookUpdateAllById(@PathVariable int id, @RequestBody BookEntity bookEntity) {
         log.info((bookEntity.toString()));
         bookRepository.updateBookEntity(id, bookEntity.getSubject(), bookEntity.getAuthor(), bookEntity.getBook_type(), bookEntity.getNote(), bookEntity
                         .getPath(), bookEntity.getServer_name(), bookEntity.getFuture_date(), bookEntity.getUpdate_date(), bookEntity.getRead_status(),
@@ -93,13 +91,13 @@ public class BookRestController {
     }
 
     @RequestMapping(value = "/remove/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity<Integer> bookRemove(@PathVariable int id) {
+    public ResponseEntity<Integer> deleteBookRemoveById(@PathVariable int id) {
         bookRepository.deleteByNo(id);
         return new ResponseEntity<>(1, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/download/{id}", method = RequestMethod.GET)
-    public ResponseEntity<Object> bookDownload(@PathVariable int id) throws IOException {
+    public ResponseEntity<Object> getBookDownloadById(@PathVariable int id) throws IOException {
 
         // FIXME 실제 데이터베이스에 id 조회를 해서 다운로드 경로를 얻어 오는 로직이 필요하다.
         String path = "C:\\Users\\iw.jhun\\Downloads\\curl-7.58.0.zip";
@@ -115,7 +113,7 @@ public class BookRestController {
     }
 
     @RequestMapping(value = "/upload", method = RequestMethod.POST)
-    public ResponseEntity handleFileUpload(
+    public ResponseEntity postBookUploadAttachFileById(
             @RequestParam("attach-file") MultipartFile multipartFile) throws IOException {
         String uploadTargetName = multipartFile.getOriginalFilename();
         byte[] uploadTargetBytes = multipartFile.getBytes();
@@ -140,12 +138,12 @@ public class BookRestController {
     }
 
     @RequestMapping(value = "/search/tags/all", method = RequestMethod.GET)
-    public ResponseEntity<Object> addTags() {
+    public ResponseEntity<Object> getBookSelectAllTags() {
         return new ResponseEntity<>(this.bookRepository.findSubjects(), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/search/subject/{subject}", method = RequestMethod.GET)
-    public ResponseEntity<List<BookEntity>> searchBySubject(@PathVariable String subject) {
+    public ResponseEntity<List<BookEntity>> getBookSearchAllBySubject(@PathVariable String subject) {
         return new ResponseEntity<>(this.bookRepository.findAllBySubject(subject), HttpStatus.OK);
 
     }

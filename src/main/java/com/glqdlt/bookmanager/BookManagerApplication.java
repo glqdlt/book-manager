@@ -2,6 +2,7 @@ package com.glqdlt.bookmanager;
 
 import com.glqdlt.bookmanager.persistence.entity.BookEntity;
 import com.glqdlt.bookmanager.persistence.repository.BookRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -12,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+@Slf4j
 @ComponentScan(basePackages = "com.glqdlt.bookmanager.*")
 @SpringBootApplication
 public class BookManagerApplication implements CommandLineRunner {
@@ -25,7 +27,6 @@ public class BookManagerApplication implements CommandLineRunner {
 
     @Override
     public void run(String... strings) {
-
         List<BookEntity> list = new ArrayList<>();
         for (int i = 0; i < 100; i++) {
             list.add(

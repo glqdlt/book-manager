@@ -12,7 +12,7 @@ import java.nio.file.Path;
 
 @Slf4j
 @Service
-public class FileHandlerUtil {
+public class FileHandlingUtil {
 
     // 아래는 google의 guava 라이브러리를 쓴다
     public String byteToStringSha256(byte[] bytes) {
