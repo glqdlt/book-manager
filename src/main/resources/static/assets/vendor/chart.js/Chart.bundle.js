@@ -6069,7 +6069,7 @@ proto$2.locale         = locale;
 proto$2.localeData     = localeData;
 
 // Deprecations
-proto$2.toIsoString = deprecate('toIsoString() is deprecated. Please use toISOString() instead (notice the capitals)', toISOString$1);
+proto$2.toIsoString = deprecate('toIsoString() is deprecated. Please use toISOString() instead (notification the capitals)', toISOString$1);
 proto$2.lang = lang;
 
 // Side effect imports

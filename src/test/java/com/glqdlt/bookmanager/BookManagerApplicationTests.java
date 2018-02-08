@@ -1,6 +1,7 @@
 package com.glqdlt.bookmanager;
 
 import com.glqdlt.bookmanager.api.BookRestController;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -20,13 +21,12 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 
+@Slf4j
 @WebAppConfiguration
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class BookManagerApplicationTests {
 
-
-	private static final Logger log = LoggerFactory.getLogger(BookManagerApplicationTests.class);
 
 	@Autowired
 	@InjectMocks
