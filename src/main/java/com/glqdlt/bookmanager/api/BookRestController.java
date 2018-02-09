@@ -17,6 +17,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.Servlet;
+import javax.servlet.ServletRequest;
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.io.File;
 import java.io.IOException;
 import java.net.URLEncoder;
@@ -112,17 +116,31 @@ public class BookRestController {
         return new ResponseEntity<>(byteArrayResource, headers, HttpStatus.OK);
     }
 
+
+// json parse error 가 나서 @valid 어노테이션 추가
+    // https://reflectoring.io/accessing-spring-data-rest-with-feign/
+    @RequestMapping(value="/upload/ajax",method = RequestMethod.POST)
+    public ResponseEntity postBookUploadAttachFile(@Valid @RequestBody String data){
+        log.debug(data.toString());
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
     @RequestMapping(value = "/upload", method = RequestMethod.POST)
     public ResponseEntity postBookUploadAttachFileById(
             @RequestParam("attach-file") MultipartFile multipartFile) throws IOException {
+
         String uploadTargetName = multipartFile.getOriginalFilename();
+        if(uploadTargetName.equals("")){
+            log.debug("attach null");
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+        }
         byte[] uploadTargetBytes = multipartFile.getBytes();
 
         //todo save to a file via multipartFile.getInputStream()
         log.debug("File name: " + uploadTargetName);
         String uploadTargetSha256 = handler.byteToStringSha256(uploadTargetBytes);
 
-        Path path = Paths.get("C:\\Users\\iw.jhun\\Desktop", "Angular_second.pptx");
+        Path path = Paths.get("C:\\Users\\iw.jhun\\Downloads\\curl-7.58.0 (1).zip");
         byte[] savedDataBytes = handler.readAllBytes(path);
         String savedSha256 = handler.byteToStringSha256(savedDataBytes);
 
