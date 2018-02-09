@@ -43,18 +43,18 @@ public class BookManagerApplicationTests {
 	public void contextLoads() {
 	}
 
-	@Test
+//	@Test
 	public void BookSearchAll() throws Exception {
 		MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/book/search/all")).andReturn();
 		MockHttpServletResponse mockHttpServletResponse =result.getResponse();
 		log.info(mockHttpServletResponse.getContentType());
 		log.info(mockHttpServletResponse.getContentAsString());
 
-		Assert.assertEquals(mockHttpServletResponse.getContentType(), "application/json;charset=UTF-8");
-		Assert.assertNotSame(mockHttpServletResponse.getContentAsString().length(),0);
+		Assert.assertEquals("application/json;charset=UTF-8",mockHttpServletResponse.getContentType());
+		Assert.assertNotSame(0,mockHttpServletResponse.getContentAsString().length());
 	}
 
-	@Test
+//	@Test
 	public void BookSearchPage() throws Exception {
 		MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/book/search/1")).andReturn();
 		MockHttpServletResponse mockHttpServletResponse =result.getResponse();

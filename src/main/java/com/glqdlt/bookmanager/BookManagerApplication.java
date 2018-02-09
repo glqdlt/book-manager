@@ -8,11 +8,13 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.PropertySource;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+@PropertySource("classpath:config.properties")
 @Slf4j
 @ComponentScan(basePackages = "com.glqdlt.bookmanager.*")
 @SpringBootApplication

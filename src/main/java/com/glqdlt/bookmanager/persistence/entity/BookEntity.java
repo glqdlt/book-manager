@@ -30,6 +30,9 @@ public class BookEntity {
     private String note;
     @NonNull
     private String path;
+
+    private String hash;
+
     @NonNull
     private String server_name;
     @NonNull

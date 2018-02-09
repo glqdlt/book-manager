@@ -8,6 +8,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -47,6 +48,9 @@ public class BookRestController {
 
     @Autowired
     FileHandlingUtil handler;
+
+    @Value("${upload.path}")
+    String upload_path;
 
     @RequestMapping(value = "/search/all", method = RequestMethod.GET)
     public ResponseEntity<List<BookEntity>> getBookSelectAll() {
@@ -117,7 +121,7 @@ public class BookRestController {
     }
 
 
-// json parse error 가 나서 @valid 어노테이션 추가
+    // json parse error 가 나서 @valid 어노테이션 추가
     // https://reflectoring.io/accessing-spring-data-rest-with-feign/
     @RequestMapping(value="/upload/ajax",method = RequestMethod.POST)
     public ResponseEntity postBookUploadAttachFile(@Valid @RequestBody String data) throws ParseException {
@@ -129,16 +133,10 @@ public class BookRestController {
         byte[] bytes = Base64.getDecoder().decode(body[1]);
         String base64Sha = handler.byteToStringSha256(bytes);
 
-        Path path = Paths.get("C:\\Users\\iw.jhun\\Downloads\\Responsive-Dynamic-Timeline-Plugin-For-jQuery-Timeliner.zip");
-        byte[] savedDataBytes = handler.readAllBytes(path);
+        byte[] savedDataBytes = handler.readAllBytes(Paths.get("C:\\Users\\iw.jhun\\Downloads\\","Responsive-Dynamic-Timeline-Plugin-For-jQuery-Timeliner.zip"));
         String savedSha256 = handler.byteToStringSha256(savedDataBytes);
 
-        // wow 똑같다.
-        log.debug(base64Sha+" vs "+savedSha256);
-
-
-
-        handler.fileWrite(Paths.get("C:\\Users\\iw.jhun\\"+fileName),bytes);
+        handler.fileWrite(Paths.get(upload_path,fileName),bytes);
         return new ResponseEntity(HttpStatus.OK);
     }
 
@@ -157,8 +155,7 @@ public class BookRestController {
         log.debug("File name: " + uploadTargetName);
         String uploadTargetSha256 = handler.byteToStringSha256(uploadTargetBytes);
 
-        Path path = Paths.get("C:\\Users\\iw.jhun\\Downloads\\curl-7.58.0 (1).zip");
-        byte[] savedDataBytes = handler.readAllBytes(path);
+        byte[] savedDataBytes = handler.readAllBytes(Paths.get("C:\\Users\\iw.jhun\\Downloads\\","curl-7.58.0 (1).zip"));
         String savedSha256 = handler.byteToStringSha256(savedDataBytes);
 
 
@@ -179,7 +176,6 @@ public class BookRestController {
 
     @RequestMapping(value = "/search/subject/{subject}", method = RequestMethod.GET)
     public ResponseEntity<List<BookEntity>> getBookSearchAllBySubject(@PathVariable String subject) {
-        return new ResponseEntity<>(this.bookRepository.findAllBySubject(subject), HttpStatus.OK);
-
+        return new ResponseEntity<>(this.bookRepository.findBySubject(subject), HttpStatus.OK);
     }
 }

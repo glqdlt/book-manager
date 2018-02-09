@@ -23,11 +23,116 @@
             width: 50px;
             height: 50px;
         }
+
+        .spinner {
+            margin: 100px auto;
+            width: 50px;
+            height: 40px;
+            text-align: center;
+            font-size: 10px;
+        }
+
+        .spinner > div {
+            background-color: #333;
+            height: 100%;
+            width: 6px;
+            display: inline-block;
+
+            -webkit-animation: sk-stretchdelay 1.2s infinite ease-in-out;
+            animation: sk-stretchdelay 1.2s infinite ease-in-out;
+        }
+
+        .spinner .rect2 {
+            -webkit-animation-delay: -1.1s;
+            animation-delay: -1.1s;
+        }
+
+        .spinner .rect3 {
+            -webkit-animation-delay: -1.0s;
+            animation-delay: -1.0s;
+        }
+
+        .spinner .rect4 {
+            -webkit-animation-delay: -0.9s;
+            animation-delay: -0.9s;
+        }
+
+        .spinner .rect5 {
+            -webkit-animation-delay: -0.8s;
+            animation-delay: -0.8s;
+        }
+
+        @-webkit-keyframes sk-stretchdelay {
+            0%, 40%, 100% {
+                -webkit-transform: scaleY(0.4)
+            }
+            20% {
+                -webkit-transform: scaleY(1.0)
+            }
+        }
+
+        @keyframes sk-stretchdelay {
+            0%, 40%, 100% {
+                transform: scaleY(0.4);
+                -webkit-transform: scaleY(0.4);
+            }
+            20% {
+                transform: scaleY(1.0);
+                -webkit-transform: scaleY(1.0);
+            }
+        }
+
+
+
+        /*toast snack popup*/
+
+
+        #snackbar {
+            visibility: hidden;
+            min-width: 250px;
+            margin-left: -125px;
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            border-radius: 2px;
+            padding: 16px;
+            position: fixed;
+            z-index: 1;
+            left: 50%;
+            bottom: 30px;
+            font-size: 17px;
+        }
+
+        #snackbar.show {
+            visibility: visible;
+            -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+            animation: fadein 0.5s, fadeout 0.5s 2.5s;
+        }
+
+        @-webkit-keyframes fadein {
+            from {bottom: 0; opacity: 0;}
+            to {bottom: 30px; opacity: 1;}
+        }
+
+        @keyframes fadein {
+            from {bottom: 0; opacity: 0;}
+            to {bottom: 30px; opacity: 1;}
+        }
+
+        @-webkit-keyframes fadeout {
+            from {bottom: 30px; opacity: 1;}
+            to {bottom: 0; opacity: 0;}
+        }
+
+        @keyframes fadeout {
+            from {bottom: 30px; opacity: 1;}
+            to {bottom: 0; opacity: 0;}
+        }
+
     </style>
 </head>
 
 <body class="fixed-nav sticky-footer bg-dark" id="page-top">
-
 
 <!-- Navigation-->
 <nav th:replace="layout/header :: navbar"></nav>
@@ -54,6 +159,18 @@
                 <div id="data-area">
 
                 </div>
+                <div id="spinner-zone" style="display: none">
+                    <div class="spinner">
+                        <div class="rect1"></div>
+                        <div class="rect2"></div>
+                        <div class="rect3"></div>
+                        <div class="rect4"></div>
+                        <div class="rect5"></div>
+                    </div>
+                </div>
+                <div id="snackbar">Some text some message..</div>
+
+
             </div>
         </div>
     </div>
@@ -106,29 +223,28 @@
             var reader = new FileReader();
 
             reader.onload = function cb(e) {
+
                 console.log("***")
                 console.log(e);
                 console.log("***");
 
-                thumbImage(file, e);
-                dataSender(file, e);
-
+                loadedCreateElements(file, e);
+                formSubmit(file, e);
             }
             reader.readAsDataURL(file);
         }
 
 
-        function thumbImage(file, onload) {
-
+        function loadedCreateElements(file, event) {
             if (/^image/.test(file.type)) {
-            $('#thumb-area').prepend("<img class='thumb' src='" + onload.target.result + "'/>");
+                $('#thumb-area').prepend("<img class='thumb' src='" + event.target.result + "'/>");
+                $('#data-area').prepend("<a href=" + event.target.result + ">download</a>");
             }
-            // download 를 누르는 기능은 파폭은 되고 크롬은 안된다. 흠좀무.
-            $('#data-area').prepend("<a href=" + onload.target.result + ">download</a>");
         }
 
-        function dataSender(file, onload) {
-            var target = {name: file.name, size: file.size, type: file.type, data: onload.target.result};
+        function formSubmit(file, event) {
+            $('#spinner-zone').show();
+            var target = {name: file.name, size: file.size, type: file.type, data: event.target.result};
 
             $.ajax({
                 method: "post",
@@ -138,10 +254,17 @@
 
             }).done(function () {
                     console.log('done');
+                    $("#spinner-zone").hide();
+                    snackPopUp();
                 }
             )
 
+        }
 
+        function snackPopUp(){
+            var x = $("#snackbar");
+            x.attr('class','show');
+            setTimeout(function(){ x.attr('class','') }, 3000);
         }
 
     </script>
