@@ -168,7 +168,7 @@
         </ol>
         <div class="row">
             <div class="col-12">
-                <form method="post" action="/api/book/upload" enctype="multipart/form-data">
+                <form id="myForm" method="post" action="/api/book/upload" enctype="multipart/form-data">
                     <label>File</label>
                     <input id="attach-file" type="file" name="attach-file" onchange="onChangedFiles(this.files)">
                     <button type="submit">Submit</button>
@@ -235,12 +235,21 @@
     <!--https://stackoverflow.com/questions/13556812/using-this-with-filereader-to-target-result-->
     <!--https://developer.mozilla.org/ko/docs/Web/API/FileReader/readAsDataURL-->
     <script>
+
+        $('#myForm').submit(function (e) {
+            e.preventDefault();
+            var formData = new FormData($('#myForm')[0]);
+
+            formSubmit(formData);
+
+        })
+
         function onChangedFiles(files) {
             'use strict';
             // var file = document.querySelector('input[type=file]').files[0];
 
             var file = files[0];
-            if(file === undefined){
+            if (file === undefined) {
                 $('.thumb').remove();
                 return;
             }
@@ -255,7 +264,7 @@
                 return;
             }
 
-            if (file.size > (500*1024)) {
+            if (file.size > (500 * 1024)) {
                 alert('Max Size 1Mb');
                 $("#spinner-zone").hide();
                 return;
@@ -271,23 +280,31 @@
 
         function thumbnailCreate(event) {
             $('#thumb-area').prepend("<img class='thumb' src='" + event.target.result + "'/>");
-            snackPopUp();
         }
 
-        function formSubmit(file, event) {
-            var target = {name: file.name, size: file.size, type: file.type, data: event.target.result};
-
+        function formSubmit(data) {
+            $("#spinner-zone").show();
             $.ajax({
-                method: "post",
-                url: '/api/book/upload/ajax',
-                contentType: 'application/json',
-                data: JSON.stringify(target),
-            }).done(function () {
-                    $("#spinner-zone").hide();
-                    snackPopUp();
+                    method: "post",
+                    url: '/api/book/upload',
+                    processData: false,
+                    contentType: false,
+                    cache: false,
+                    data: data,
+                    success: function () {
+                        $("#spinner-zone").hide();
+                        snackPopUp();
+                        setTimeout(function(){
+                            window.location.href='/book/list';
+                        },2000);
+                    },
+                    error: function (e) {
+                        $("#spinner-zone").hide();
+                        console.error(e);
+                        alert('fail');
+                    }
                 }
             )
-
         }
 
         function snackPopUp() {
