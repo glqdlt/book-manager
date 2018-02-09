@@ -115,7 +115,7 @@
                 method: "post",
                 url: '/api/book/upload/ajax',
                 contentType : 'application/json',
-                data: target,
+                data: JSON.stringify(target),
 
             }).done(function () {
                     console.log('done');
