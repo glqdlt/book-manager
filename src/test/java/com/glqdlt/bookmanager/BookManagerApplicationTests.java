@@ -1,6 +1,7 @@
 package com.glqdlt.bookmanager;
 
-import com.glqdlt.bookmanager.controller.BookController;
+import com.glqdlt.bookmanager.api.BookRestController;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -20,38 +21,45 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 
+@Slf4j
 @WebAppConfiguration
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class BookManagerApplicationTests {
 
 
-	private static final Logger log = LoggerFactory.getLogger(BookManagerApplicationTests.class);
-
 	@Autowired
 	@InjectMocks
-	private BookController bookController;
+	private BookRestController bookRestController;
 	private MockMvc mockMvc;
 
 	@Before
 	public void init(){
 		MockitoAnnotations.initMocks(this);
-		mockMvc = MockMvcBuilders.standaloneSetup(bookController).build();
+		mockMvc = MockMvcBuilders.standaloneSetup(bookRestController).build();
 	}
 
 	@Test
 	public void contextLoads() {
 	}
 
-	@Test
+//	@Test
 	public void BookSearchAll() throws Exception {
 		MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/book/search/all")).andReturn();
 		MockHttpServletResponse mockHttpServletResponse =result.getResponse();
 		log.info(mockHttpServletResponse.getContentType());
 		log.info(mockHttpServletResponse.getContentAsString());
 
-		Assert.assertEquals(mockHttpServletResponse.getContentType(), "application/json;charset=UTF-8");
-		Assert.assertNotSame(mockHttpServletResponse.getContentAsString().length(),0);
+		Assert.assertEquals("application/json;charset=UTF-8",mockHttpServletResponse.getContentType());
+		Assert.assertNotSame(0,mockHttpServletResponse.getContentAsString().length());
+	}
+
+//	@Test
+	public void BookSearchPage() throws Exception {
+		MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/book/search/1")).andReturn();
+		MockHttpServletResponse mockHttpServletResponse =result.getResponse();
+		log.info(mockHttpServletResponse.getContentAsString());
+
 	}
 
 }

@@ -1,55 +1,54 @@
 package com.glqdlt.bookmanager.persistence.entity;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import java.util.Date;
 
+
+@RequiredArgsConstructor
 @Entity
 @ToString
 @NoArgsConstructor
 @Data
 public class BookEntity {
-    public BookEntity
-        (String subject, String author, int book_type, String note, String path, String server_name,String reg_id, Date future_date,
-                      Date reg_date, Date update_date, int read_status, String thumbnail_url, String review_url)
-    {
-        this.subject = subject;
-        this.author = author;
-        this.book_type = book_type;
-        this.note = note;
-        this.path = path;
-        this.server_name = server_name;
-        this.reg_id = reg_id;
-        this.future_date = future_date;
-        this.reg_date = reg_date;
-        this.update_date = update_date;
-        this.read_status = read_status;
-        this.thumbnail_url = thumbnail_url;
-        this.review_url = review_url;
-    }
 
     @Id
     @GeneratedValue
     private int no;
 
+    @NonNull
     private String subject;
+    @NonNull
     private String author;
+    @NonNull
     private int book_type;
+    @NonNull
     private String note;
+    @NonNull
     private String path;
+
+    private String hash;
+
+    @NonNull
     private String server_name;
+    @NonNull
     private String reg_id;
+    @NonNull
     private Date future_date;
+    @NonNull
     private Date reg_date;
+    @NonNull
     private Date update_date;
+    @NonNull
     private int read_status;
+    @NonNull
     private String thumbnail_url;
+    @NonNull
     private String review_url;
+
+    private String file_orign_name;
 }

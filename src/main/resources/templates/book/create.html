@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html
+        xmlns:th="http://www.thymeleaf.org">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>SB Admin - Start Bootstrap Template</title>
+    <!-- Bootstrap core CSS-->
+    <link th:href="@{/assets/vendor/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+    <!-- Custom fonts for this template-->
+    <link th:href="@{/assets/vendor/font-awesome/css/font-awesome.min.css}" rel="stylesheet" type="text/css">
+    <!-- Custom styles for this template-->
+    <link th:href="@{/assets/css/sb-admin.css}" rel="stylesheet">
+
+    <script src="/webjars/vue/2.3.4/dist/vue.min.js"></script>
+    <style>
+        .thumb {
+            width: 50px;
+            height: 50px;
+        }
+
+        /*spinner*/
+
+        .spinner {
+            margin: 100px auto;
+            width: 50px;
+            height: 40px;
+            text-align: center;
+            font-size: 10px;
+        }
+
+        .spinner > div {
+            background-color: #333;
+            height: 100%;
+            width: 6px;
+            display: inline-block;
+
+            -webkit-animation: sk-stretchdelay 1.2s infinite ease-in-out;
+            animation: sk-stretchdelay 1.2s infinite ease-in-out;
+        }
+
+        .spinner .rect2 {
+            -webkit-animation-delay: -1.1s;
+            animation-delay: -1.1s;
+        }
+
+        .spinner .rect3 {
+            -webkit-animation-delay: -1.0s;
+            animation-delay: -1.0s;
+        }
+
+        .spinner .rect4 {
+            -webkit-animation-delay: -0.9s;
+            animation-delay: -0.9s;
+        }
+
+        .spinner .rect5 {
+            -webkit-animation-delay: -0.8s;
+            animation-delay: -0.8s;
+        }
+
+        @-webkit-keyframes sk-stretchdelay {
+            0%, 40%, 100% {
+                -webkit-transform: scaleY(0.4)
+            }
+            20% {
+                -webkit-transform: scaleY(1.0)
+            }
+        }
+
+        @keyframes sk-stretchdelay {
+            0%, 40%, 100% {
+                transform: scaleY(0.4);
+                -webkit-transform: scaleY(0.4);
+            }
+            20% {
+                transform: scaleY(1.0);
+                -webkit-transform: scaleY(1.0);
+            }
+        }
+
+        /*toast snack popup*/
+
+        #snackbar {
+            visibility: hidden;
+            min-width: 250px;
+            margin-left: -125px;
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            border-radius: 2px;
+            padding: 16px;
+            position: fixed;
+            z-index: 1;
+            left: 50%;
+            bottom: 30px;
+            font-size: 17px;
+        }
+
+        #snackbar.show {
+            visibility: visible;
+            -webkit-animation: fadein 0.5s, fadeout 0.5s 1.5s;
+            animation: fadein 0.5s, fadeout 0.5s 1.5s;
+        }
+
+        @-webkit-keyframes fadein {
+            from {
+                bottom: 0;
+                opacity: 0;
+            }
+            to {
+                bottom: 30px;
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadein {
+            from {
+                bottom: 0;
+                opacity: 0;
+            }
+            to {
+                bottom: 30px;
+                opacity: 1;
+            }
+        }
+
+        @-webkit-keyframes fadeout {
+            from {
+                bottom: 30px;
+                opacity: 1;
+            }
+            to {
+                bottom: 0;
+                opacity: 0;
+            }
+        }
+
+        @keyframes fadeout {
+            from {
+                bottom: 30px;
+                opacity: 1;
+            }
+            to {
+                bottom: 0;
+                opacity: 0;
+            }
+        }
+
+    </style>
+</head>
+
+<body class="fixed-nav sticky-footer bg-dark" id="page-top">
+
+<!-- Navigation-->
+<nav th:replace="layout/header :: navbar"></nav>
+<div class="content-wrapper">
+    <div class="container-fluid">
+        <!-- Breadcrumbs-->
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="../index.html">Dashboard</a>
+            </li>
+            <li class="breadcrumb-item active">Blank Page</li>
+        </ol>
+        <div class="row">
+            <div class="col-12">
+                <form id="myForm" method="post" action="/api/book/upload" enctype="multipart/form-data">
+
+                    <div class="form-group">
+                        <label>Subject</label><input class="form-control" type="text"/>
+                    </div>
+                    <div class="form-group">
+                       <label>Ahtur</label><input class="form-control" type="text"/>
+                    </div>
+                    <div class="form-group">
+                        <label>Thumbnail-Image</label><input type="file" name="thumbnail-image"
+                                                             onchange="onChangedFiles(this.files)">
+                        <div id="thumb-area"></div>
+                    </div>
+                    <div class="form-group">
+                        <label>Attach-File</label><input name="attach-file" type="file"/>
+                    </div>
+                    <button class="btn btn-primary" type="submit">Submit</button>
+                </form>
+                <div id="spinner-zone" style="display: none">
+                    <div class="spinner">
+                        <div class="rect1"></div>
+                        <div class="rect2"></div>
+                        <div class="rect3"></div>
+                        <div class="rect4"></div>
+                        <div class="rect5"></div>
+                    </div>
+                </div>
+                <div id="snackbar">Uploaded!</div>
+            </div>
+        </div>
+    </div>
+    <!-- /.container-fluid-->
+    <!-- /.content-wrapper-->
+    <footer class="sticky-footer">
+        <div class="container">
+            <div class="text-center">
+                <small>Copyright © Your Website 2018</small>
+            </div>
+        </div>
+    </footer>
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fa fa-angle-up"></i>
+    </a>
+    <!-- Logout Modal-->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-primary" href="../login.html">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Bootstrap core JavaScript-->
+    <script src="/assets/vendor/jquery/jquery.min.js"></script>
+    <script src="/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- Core plugin JavaScript-->
+    <script src="/assets/vendor/jquery-easing/jquery.easing.min.js"></script>
+    <!-- Custom scripts for all pages-->
+    <script src="/assets/js/sb-admin.min.js"></script>
+
+    <!--https://developer.mozilla.org/en-US/docs/Web/API/FileReader/readAsDataURL-->
+    <!--https://stackoverflow.com/questions/13556812/using-this-with-filereader-to-target-result-->
+    <!--https://developer.mozilla.org/ko/docs/Web/API/FileReader/readAsDataURL-->
+    <script>
+
+        $('#myForm').submit(function (e) {
+            e.preventDefault();
+            var formData = new FormData($('#myForm')[0]);
+
+            formSubmit(formData);
+
+        })
+
+        function onChangedFiles(files) {
+            'use strict';
+
+            var file = files[0];
+            if (file === undefined) {
+                $('.thumb').remove();
+                return;
+            }
+
+            $('#spinner-zone').show();
+
+            var reader = new FileReader();
+
+            var validation = {msg: '', e: false};
+
+
+            //validation check..
+
+            if (!(/^image/.test(file.type))) {
+                validation['msg'] = 'Image Only';
+                validation['e'] = true;
+            }
+            if (file.size > (1024 * 1024)) {
+                validation['msg'] = 'Max Size 1Mb';
+                validation['e'] = true;
+            }
+
+            //if validation ?
+
+            if (validation['e'] === true) {
+                alert(validation['msg']);
+                $("#spinner-zone").hide();
+                return;
+            }
+
+
+            reader.onload = function (e) {
+                $("#spinner-zone").hide();
+                thumbnailCreate(e);
+            }
+
+            reader.readAsDataURL(file);
+        }
+
+        function thumbnailCreate(event) {
+            $('#thumb-area').prepend("<img class='thumb' src='" + event.target.result + "'/>");
+        }
+
+        function formSubmit(data) {
+            $("#spinner-zone").show();
+            $.ajax({
+                    method: "post",
+                    url: '/api/book/upload',
+                    processData: false,
+                    contentType: false,
+                    cache: false,
+                    data: data,
+                    success: function () {
+                        $("#spinner-zone").hide();
+                        snackPopUp();
+                        setTimeout(function () {
+                            window.location.href = '/book/list';
+                        }, 2000);
+                    },
+                    error: function (e) {
+                        $("#spinner-zone").hide();
+                        console.error(e);
+                        alert('fail');
+                    }
+                }
+            )
+        }
+
+        function snackPopUp() {
+            $("#snackbar").attr('class', 'show');
+            setTimeout(function () {
+                $("#snackbar").attr('class', '')
+            }, 2000);
+        }
+
+    </script>
+</div>
+</body>
+
+</html>
