@@ -51,6 +51,9 @@
                 <div id="thumb-area">
 
                 </div>
+                <div id="data-area">
+
+                </div>
             </div>
         </div>
     </div>
@@ -102,25 +105,26 @@
             var file = document.querySelector('input[type=file]').files[0];
             var reader = new FileReader();
 
-            reader.onload = function callback(e) {
+            reader.onload = function cb(e) {
                 console.log("***")
                 console.log(e);
-                console.log("***")
+                console.log("***");
 
-                thumbImage(e);
+                thumbImage(file, e);
                 dataSender(file, e);
 
             }
-            // console.log(file);
-            // console.log(file.name);
-            // console.log(file.type);
-            // console.log(file.size);
             reader.readAsDataURL(file);
         }
 
 
-        function thumbImage(onload){
-           $('#thumb-area').prepend("<img class='thumb' src='"+onload.target.result+"'/>");
+        function thumbImage(file, onload) {
+
+            if (/^image/.test(file.type)) {
+            $('#thumb-area').prepend("<img class='thumb' src='" + onload.target.result + "'/>");
+            }
+            // download 를 누르는 기능은 파폭은 되고 크롬은 안된다. 흠좀무.
+            $('#data-area').prepend("<a href=" + onload.target.result + ">download</a>");
         }
 
         function dataSender(file, onload) {
@@ -129,7 +133,7 @@
             $.ajax({
                 method: "post",
                 url: '/api/book/upload/ajax',
-                contentType : 'application/json',
+                contentType: 'application/json',
                 data: JSON.stringify(target),
 
             }).done(function () {

@@ -4,6 +4,9 @@ import com.glqdlt.bookmanager.persistence.entity.BookEntity;
 import com.glqdlt.bookmanager.persistence.repository.BookRepository;
 import com.glqdlt.bookmanager.service.FileHandlingUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.data.domain.Page;
@@ -117,9 +120,25 @@ public class BookRestController {
 // json parse error 가 나서 @valid 어노테이션 추가
     // https://reflectoring.io/accessing-spring-data-rest-with-feign/
     @RequestMapping(value="/upload/ajax",method = RequestMethod.POST)
-    public ResponseEntity postBookUploadAttachFile(@Valid @RequestBody String data){
-        log.debug(data.toString());
-//        Base64.getDecoder().decode();
+    public ResponseEntity postBookUploadAttachFile(@Valid @RequestBody String data) throws ParseException {
+        JSONParser parser = new JSONParser();
+        JSONObject object = (JSONObject) parser.parse(data.toString());
+
+        String fileName = object.get("name").toString();
+        String[] body = object.get("data").toString().split(",");
+        byte[] bytes = Base64.getDecoder().decode(body[1]);
+        String base64Sha = handler.byteToStringSha256(bytes);
+
+        Path path = Paths.get("C:\\Users\\iw.jhun\\Downloads\\Responsive-Dynamic-Timeline-Plugin-For-jQuery-Timeliner.zip");
+        byte[] savedDataBytes = handler.readAllBytes(path);
+        String savedSha256 = handler.byteToStringSha256(savedDataBytes);
+
+        // wow 똑같다.
+        log.debug(base64Sha+" vs "+savedSha256);
+
+
+
+        handler.fileWrite(Paths.get("C:\\Users\\iw.jhun\\"+fileName),bytes);
         return new ResponseEntity(HttpStatus.OK);
     }
 
