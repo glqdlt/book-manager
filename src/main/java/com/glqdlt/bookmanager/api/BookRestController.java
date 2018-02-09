@@ -142,14 +142,16 @@ public class BookRestController {
 
     @RequestMapping(value = "/upload", method = RequestMethod.POST)
     public ResponseEntity postBookUploadAttachFileById(
-            @RequestParam("attach-file") MultipartFile multipartFile) throws IOException {
+            @RequestParam("attach-file") MultipartFile attachFile,
+            @RequestParam("thumbnail-image") MultipartFile thumbnailImage
+    ) throws IOException {
 
-        String uploadTargetName = multipartFile.getOriginalFilename();
+        String uploadTargetName = attachFile.getOriginalFilename();
         if(uploadTargetName.equals("")){
             log.debug("attach null");
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
-        byte[] uploadTargetBytes = multipartFile.getBytes();
+        byte[] uploadTargetBytes = attachFile.getBytes();
 
         //todo save to a file via multipartFile.getInputStream()
         log.debug("File name: " + uploadTargetName);
@@ -158,13 +160,11 @@ public class BookRestController {
         byte[] savedDataBytes = handler.readAllBytes(Paths.get("C:\\Users\\iw.jhun\\Downloads\\","curl-7.58.0 (1).zip"));
         String savedSha256 = handler.byteToStringSha256(savedDataBytes);
 
-
         log.debug("sha256 hex :" + uploadTargetSha256 + ", saved hex : " + savedSha256);
         log.debug("sha256 size:" + handler.byteToSizeMegaBytes(uploadTargetBytes) + ", saved size:" + handler.byteToSizeMegaBytes
                 (savedDataBytes));
 
-        Path p = Paths.get("c:/users/iw.jhun/Desktop", uploadTargetSha256);
-        handler.fileWrite(p, uploadTargetBytes);
+        handler.fileWrite(Paths.get("c:/users/iw.jhun/Desktop", uploadTargetSha256), uploadTargetBytes);
 
         return new ResponseEntity(HttpStatus.OK);
     }
