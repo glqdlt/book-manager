@@ -18,6 +18,12 @@
     <link th:href="@{/assets/css/sb-admin.css}" rel="stylesheet">
 
     <script src="/webjars/vue/2.3.4/dist/vue.min.js"></script>
+    <style>
+        .thumb {
+            width: 50px;
+            height: 50px;
+        }
+    </style>
 </head>
 
 <body class="fixed-nav sticky-footer bg-dark" id="page-top">
@@ -42,6 +48,9 @@
                     <button type="submit">Submit</button>
                 </form>
                 <button onclick="onClickSubmit()">AjaxSubmit</button>
+                <div id="thumb-area">
+
+                </div>
             </div>
         </div>
     </div>
@@ -98,6 +107,7 @@
                 console.log(e);
                 console.log("***")
 
+                thumbImage(e);
                 dataSender(file, e);
 
             }
@@ -106,6 +116,11 @@
             // console.log(file.type);
             // console.log(file.size);
             reader.readAsDataURL(file);
+        }
+
+
+        function thumbImage(onload){
+           $('#thumb-area').prepend("<img class='thumb' src='"+onload.target.result+"'/>");
         }
 
         function dataSender(file, onload) {

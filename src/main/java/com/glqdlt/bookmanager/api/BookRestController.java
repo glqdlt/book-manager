@@ -27,10 +27,7 @@ import java.net.URLEncoder;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Slf4j
 @RequestMapping("/api/book")
@@ -122,6 +119,7 @@ public class BookRestController {
     @RequestMapping(value="/upload/ajax",method = RequestMethod.POST)
     public ResponseEntity postBookUploadAttachFile(@Valid @RequestBody String data){
         log.debug(data.toString());
+//        Base64.getDecoder().decode();
         return new ResponseEntity(HttpStatus.OK);
     }
 
