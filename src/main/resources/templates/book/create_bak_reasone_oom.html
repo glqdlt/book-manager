@@ -82,7 +82,10 @@
             }
         }
 
+
+
         /*toast snack popup*/
+
 
         #snackbar {
             visibility: hidden;
@@ -107,47 +110,23 @@
         }
 
         @-webkit-keyframes fadein {
-            from {
-                bottom: 0;
-                opacity: 0;
-            }
-            to {
-                bottom: 30px;
-                opacity: 1;
-            }
+            from {bottom: 0; opacity: 0;}
+            to {bottom: 30px; opacity: 1;}
         }
 
         @keyframes fadein {
-            from {
-                bottom: 0;
-                opacity: 0;
-            }
-            to {
-                bottom: 30px;
-                opacity: 1;
-            }
+            from {bottom: 0; opacity: 0;}
+            to {bottom: 30px; opacity: 1;}
         }
 
         @-webkit-keyframes fadeout {
-            from {
-                bottom: 30px;
-                opacity: 1;
-            }
-            to {
-                bottom: 0;
-                opacity: 0;
-            }
+            from {bottom: 30px; opacity: 1;}
+            to {bottom: 0; opacity: 0;}
         }
 
         @keyframes fadeout {
-            from {
-                bottom: 30px;
-                opacity: 1;
-            }
-            to {
-                bottom: 0;
-                opacity: 0;
-            }
+            from {bottom: 30px; opacity: 1;}
+            to {bottom: 0; opacity: 0;}
         }
 
     </style>
@@ -170,9 +149,10 @@
             <div class="col-12">
                 <form method="post" action="/api/book/upload" enctype="multipart/form-data">
                     <label>File</label>
-                    <input id="attach-file" type="file" name="attach-file" onchange="onChangedFiles(this.files)">
+                    <input id="attach-file" type="file" name="attach-file">
                     <button type="submit">Submit</button>
                 </form>
+                <button onclick="onClickSubmit()">AjaxSubmit</button>
                 <div id="thumb-area">
 
                 </div>
@@ -235,46 +215,30 @@
     <!--https://stackoverflow.com/questions/13556812/using-this-with-filereader-to-target-result-->
     <!--https://developer.mozilla.org/ko/docs/Web/API/FileReader/readAsDataURL-->
     <script>
-        function onChangedFiles(files) {
+        function onClickSubmit() {
             'use strict';
-            // var file = document.querySelector('input[type=file]').files[0];
-
-            var file = files[0];
-            if(file === undefined){
-                $('.thumb').remove();
-                return;
-            }
-
-            $('#spinner-zone').show();
-
+            var file = document.querySelector('input[type=file]').files[0];
             var reader = new FileReader();
 
-            if (!(/^image/.test(file.type))) {
-                alert('Image Only');
-                $("#spinner-zone").hide();
-                return;
-            }
-
-            if (file.size > (500*1024)) {
-                alert('Max Size 1Mb');
-                $("#spinner-zone").hide();
-                return;
-            }
-
             reader.onload = function (e) {
-                $("#spinner-zone").hide();
-                thumbnailCreate(e);
+                // console.log("***")
+                // console.log(e);
+                // console.log("***");
+                loadedCreateElements(file, e);
+                formSubmit(file, e);
             }
-
             reader.readAsDataURL(file);
         }
 
-        function thumbnailCreate(event) {
-            $('#thumb-area').prepend("<img class='thumb' src='" + event.target.result + "'/>");
-            snackPopUp();
+        function loadedCreateElements(file, event) {
+            if (/^image/.test(file.type)) {
+                $('#thumb-area').prepend("<img class='thumb' src='" + event.target.result + "'/>");
+                $('#data-area').prepend("<a href=" + event.target.result + ">download</a>");
+            }
         }
 
         function formSubmit(file, event) {
+            $('#spinner-zone').show();
             var target = {name: file.name, size: file.size, type: file.type, data: event.target.result};
 
             $.ajax({
@@ -290,11 +254,13 @@
 
         }
 
-        function snackPopUp() {
-            $("#snackbar").attr('class', 'show');
-            setTimeout(function () {
-                $("#snackbar").attr('class', '')
-            }, 2000);
+        function snackPopUp(){
+            var x = $("#snackbar");
+            x.attr('class','show');
+            setTimeout(function(){ x.attr('class','') }, 2000);
+            setTimeout(function(){
+                window.location.href ="/book/list";
+            },2500);
         }
 
     </script>
