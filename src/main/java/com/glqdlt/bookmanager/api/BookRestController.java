@@ -52,6 +52,35 @@ public class BookRestController {
     @Value("${upload.path}")
     String upload_path;
 
+
+    @RequestMapping(value = "/list", method = RequestMethod.POST)
+    public ResponseEntity<Map<String, Object>> postBookSelectAll(@RequestParam int draw, @RequestParam int length,
+                                                                 @RequestParam int start) {
+        log.info("call");
+        log.debug("Call jquery data table list..");
+
+        int page = 0;
+        if (start != 0) {
+            page = (start / length);
+        }
+        Map<String, Object> map = new HashMap<>();
+        Pageable pageable = new PageRequest(page, length, new Sort(Sort.Direction.DESC, "no"));
+        Page<BookEntity> entityPage = bookRepository.findAll(pageable);
+        List<BookEntity> data = new ArrayList<>();
+        entityPage.forEach(x -> data.add(x));
+
+        log.debug("totalPages:"+entityPage.getTotalPages()+", total elements: "+entityPage.getTotalElements());
+        map.put("draw", draw);
+        map.put("recordsFiltered", entityPage.getTotalPages());
+        map.put("recordsTotal", entityPage.getTotalElements());
+        map.put("data", data);
+        return new ResponseEntity<>(map, HttpStatus.OK);
+
+
+    }
+
+
+
     @RequestMapping(value = "/search/all", method = RequestMethod.GET)
     public ResponseEntity<List<BookEntity>> getBookSelectAll() {
         List<BookEntity> list = bookRepository.findAll();
