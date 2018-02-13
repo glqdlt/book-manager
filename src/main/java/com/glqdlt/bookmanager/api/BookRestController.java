@@ -61,6 +61,9 @@ public class BookRestController {
 
         Enumeration<String> element = httpServletRequest.getParameterNames();
 
+        // TODO search params 에 대한 처리의 고민.
+
+
         log.debug("==================");
         String key;
         String val;
