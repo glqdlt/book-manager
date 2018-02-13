@@ -55,8 +55,22 @@ public class BookRestController {
 
     @RequestMapping(value = "/list", method = RequestMethod.POST)
     public ResponseEntity<Map<String, Object>> postBookSelectAll(@RequestParam int draw, @RequestParam int length,
-                                                                 @RequestParam int start) {
+                                                                 @RequestParam int start, HttpServletRequest httpServletRequest) {
         log.debug("Call jquery data table list..");
+        log.debug(httpServletRequest.getParameterNames().nextElement().toString());
+
+        Enumeration<String> element = httpServletRequest.getParameterNames();
+
+        log.debug("==================");
+        String key;
+        String val;
+        while(element.hasMoreElements()){
+            key = element.nextElement();
+            val = httpServletRequest.getParameter(key);
+            log.debug("key :"+key+", val:"+val);
+        }
+        log.debug("==================");
+
         int page = 0;
         if (start != 0) {
             page = (start / length);

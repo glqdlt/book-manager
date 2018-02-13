@@ -26,4 +26,9 @@ public class BookController {
     public String bookConfig(){
         return VIEW_PREFIX +"config";
     }
+
+    @RequestMapping(value="detail",method = RequestMethod.GET)
+    public String detail(){
+        return VIEW_PREFIX+"detail";
+    }
 }

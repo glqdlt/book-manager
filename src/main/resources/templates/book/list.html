@@ -2,90 +2,156 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="">
-  <meta name="author" content="">
-  <title>SB Admin - Start Bootstrap Template</title>
-  <!-- Bootstrap core CSS-->
-  <link href="/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <!-- Custom fonts for this template-->
-  <link href="/assets/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-  <!-- Page level plugin CSS-->
-  <link href="/assets/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
-  <!-- Custom styles for this template-->
-  <link href="/assets/css/sb-admin.css" rel="stylesheet">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>SB Admin - Start Bootstrap Template</title>
+    <!-- Bootstrap core CSS-->
+    <link href="/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom fonts for this template-->
+    <link href="/assets/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <!-- Page level plugin CSS-->
+    <link href="/assets/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
+    <!-- Custom styles for this template-->
+    <link href="/assets/css/sb-admin.css" rel="stylesheet">
+    <style>
+
+        .spinner-zone {
+            position: absolute;
+            z-index: 99999;
+        }
+
+        .spinner {
+            margin: 100px auto;
+            width: 50px;
+            height: 40px;
+            text-align: center;
+            font-size: 10px;
+        }
+
+        .spinner > div {
+            background-color: #333;
+            height: 100%;
+            width: 6px;
+            display: inline-block;
+
+            -webkit-animation: sk-stretchdelay 1.2s infinite ease-in-out;
+            animation: sk-stretchdelay 1.2s infinite ease-in-out;
+        }
+
+        .spinner .rect2 {
+            -webkit-animation-delay: -1.1s;
+            animation-delay: -1.1s;
+        }
+
+        .spinner .rect3 {
+            -webkit-animation-delay: -1.0s;
+            animation-delay: -1.0s;
+        }
+
+        .spinner .rect4 {
+            -webkit-animation-delay: -0.9s;
+            animation-delay: -0.9s;
+        }
+
+        .spinner .rect5 {
+            -webkit-animation-delay: -0.8s;
+            animation-delay: -0.8s;
+        }
+
+        @-webkit-keyframes sk-stretchdelay {
+            0%, 40%, 100% {
+                -webkit-transform: scaleY(0.4)
+            }
+            20% {
+                -webkit-transform: scaleY(1.0)
+            }
+        }
+
+        @keyframes sk-stretchdelay {
+            0%, 40%, 100% {
+                transform: scaleY(0.4);
+                -webkit-transform: scaleY(0.4);
+            }
+            20% {
+                transform: scaleY(1.0);
+                -webkit-transform: scaleY(1.0);
+            }
+        }
+    </style>
 </head>
 
 <body class="fixed-nav sticky-footer bg-dark" id="page-top">
 <!-- Navigation-->
 <nav th:replace="layout/header :: navbar"></nav>
-  <div class="content-wrapper">
+<div class="content-wrapper">
     <div class="container-fluid">
-      <!-- Breadcrumbs-->
-      <ol class="breadcrumb">
-        <li class="breadcrumb-item">
-          <a href="#">Dashboard</a>
-        </li>
-        <li class="breadcrumb-item active">Tables</li>
-      </ol>
-      <!-- Example DataTables Card-->
-      <div class="card mb-3">
-        <div class="card-header">
-          <i class="fa fa-table"></i> Data Table Example</div>
-        <div class="card-body">
-          <div>
-            <a href="/book/create"><i class="fas fa-edit"></i>New</a>
-          </div>
-          <div class="table-responsive">
-            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-              <thead>
-                <tr>
-                  <th>No</th>
-                  <th>Subject</th>
-                  <th>Author</th>
-                  <th>Category</th>
-                  <th>CreateTime</th>
-                  <th>Readable</th>
-                </tr>
-              </thead>
-            </table>
-          </div>
+        <!-- Breadcrumbs-->
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="#">Dashboard</a>
+            </li>
+            <li class="breadcrumb-item active">Tables</li>
+        </ol>
+        <!-- Example DataTables Card-->
+        <div class="card mb-3">
+            <div class="card-header">
+                <i class="fa fa-table"></i> Data Table Example
+            </div>
+            <div class="card-body">
+                <div>
+                    <a href="/book/create"><i class="fas fa-edit"></i>New</a>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Subject</th>
+                            <th>Author</th>
+                            <th>Category</th>
+                            <th>CreateTime</th>
+                            <th>Readable</th>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+            <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
         </div>
-        <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
-      </div>
     </div>
     <!-- /.container-fluid-->
     <!-- /.content-wrapper-->
     <footer class="sticky-footer">
-      <div class="container">
-        <div class="text-center">
-          <small>Copyright © Your Website 2018</small>
+        <div class="container">
+            <div class="text-center">
+                <small>Copyright © Your Website 2018</small>
+            </div>
         </div>
-      </div>
     </footer>
     <!-- Scroll to Top Button-->
     <a class="scroll-to-top rounded" href="#page-top">
-      <i class="fa fa-angle-up"></i>
+        <i class="fa fa-angle-up"></i>
     </a>
     <!-- Logout Modal-->
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">×</span>
-            </button>
-          </div>
-          <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-          <div class="modal-footer">
-            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-            <a class="btn btn-primary" href="../login.html">Logout</a>
-          </div>
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-primary" href="../login.html">Logout</a>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
     <script src="/webjars/moment/2.15.2/min/moment.min.js"></script>
     <!-- Bootstrap core JavaScript-->
@@ -99,48 +165,67 @@
     <!-- Custom scripts for all pages-->
     <script src="/assets/js/sb-admin.min.js"></script>
     <!-- Custom scripts for this page-->
-  </div>
-  <script>
-      $(document).ready(function() {
-          $('#dataTable').DataTable({
-              "processing" : true,
-              "serverSide" : true,
-              "ajax" : {
-                  "url" : "/api/book/list",
-                  "type" : "POST"
-              },
-              "columns" : [
-                  {"data": "no"},
-                  {"data": "subject"},
-                  {"data": "author"},
-                  {"data": "book_type", render : function (data){
-                      switch (data){
-                          case 1 :
-                              return "일반";
-                          case 2 :
-                              return "전공";
-                          default :
-                              return "None";
-                      }
-                      }},
-                  {"data": "reg_date", render : function(data){
-                          return moment(data).format('YYYY/MM/DD hh:mm')
-                      }},
-                  {"data": "read_status", render : function(data){
-                      switch (data){
-                          case 1:
-                              return "읽음";
-                          case 2:
-                              return "읽는중";
-                          default :
-                              return "안읽음";
-                      }
-                      }}
-              ]
 
-          });
-      });
-  </script>
+    <!--spinner area-->
+    <div class="spinner-zone">
+        <div class="spinner">
+            <div class="rect1"></div>
+            <div class="rect2"></div>
+            <div class="rect3"></div>
+            <div class="rect4"></div>
+            <div class="rect5"></div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $('#dataTable').DataTable({
+            "processing": false,
+            "serverSide": true,
+            "ajax": {
+                "url": "/api/book/list",
+                "type": "POST"
+            },
+            "columns": [
+                {"data": "no", render : function(data){
+                    return "<a href='/book/"+data+"/detail'>"+data+"</a>";
+                    }},
+                {"data": "subject"},
+                {"data": "author"},
+                {
+                    "data": "book_type", render: function (data) {
+                        switch (data) {
+                            case 1 :
+                                return "일반";
+                            case 2 :
+                                return "전공";
+                            default :
+                                return "None";
+                        }
+                    }
+                },
+                {
+                    "data": "reg_date", render: function (data) {
+                        return moment(data).format('YYYY/MM/DD hh:mm')
+                    }
+                },
+                {
+                    "data": "read_status", render: function (data) {
+                        switch (data) {
+                            case 1:
+                                return "읽음";
+                            case 2:
+                                return "읽는중";
+                            default :
+                                return "안읽음";
+                        }
+                    }
+                }
+            ]
+
+        });
+    });
+</script>
 </body>
 
 </html>
