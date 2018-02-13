@@ -6,6 +6,8 @@ import lombok.*;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 
@@ -29,7 +31,7 @@ public class BookEntity {
     @NonNull
     private String note;
     @NonNull
-    private String path;
+    private String file_path;
 
     private String hash;
 
@@ -51,4 +53,5 @@ public class BookEntity {
     private String review_url;
 
     private String file_orign_name;
+
 }

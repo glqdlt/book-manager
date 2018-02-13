@@ -136,7 +136,8 @@ public class BookRestController {
     public ResponseEntity<Integer> putBookUpdateAllById(@PathVariable int id, @RequestBody BookEntity bookEntity) {
         log.info((bookEntity.toString()));
         bookRepository.updateBookEntity(id, bookEntity.getSubject(), bookEntity.getAuthor(), bookEntity.getBook_type(), bookEntity.getNote(), bookEntity
-                        .getPath(), bookEntity.getServer_name(), bookEntity.getFuture_date(), bookEntity.getUpdate_date(), bookEntity.getRead_status(),
+                        .getFile_path(), bookEntity.getServer_name(), bookEntity.getFuture_date(), bookEntity.getUpdate_date(), bookEntity
+                        .getRead_status(),
                 bookEntity.getThumbnail_url(), bookEntity.getReview_url());
         return new ResponseEntity<>(1, HttpStatus.OK);
     }

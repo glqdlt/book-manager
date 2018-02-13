@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -17,7 +18,7 @@ public interface BookRepository extends JpaRepository<BookEntity, Integer> {
     @Query("UPDATE BookEntity b " +
             "set b.subject = :subject, " +
             "b.author = :author, " +
-            "b.path = :path, " +
+            "b.file_path = :file_path, " +
             "b.server_name =:server_name ," +
             "b.read_status = :read_status, " +
             "b.update_date = :update_date, " +
@@ -33,7 +34,7 @@ public interface BookRepository extends JpaRepository<BookEntity, Integer> {
             @Param("author") String author,
             @Param("book_type") int book_type,
             @Param("note") String note,
-            @Param("path") String path,
+            @Param("file_path") String file_path,
             @Param("server_name") String server_name,
             @Param("future_date") Date future_date,
             @Param("update_date") Date update_date,

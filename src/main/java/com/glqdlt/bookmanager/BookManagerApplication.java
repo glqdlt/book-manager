@@ -10,6 +10,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.PropertySource;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -31,10 +32,16 @@ public class BookManagerApplication implements CommandLineRunner {
     public void run(String... strings) {
         List<BookEntity> list = new ArrayList<>();
         for (int i = 0; i < 100; i++) {
-            list.add(
-                    new BookEntity(
-                            "subject" + i, "author" + i, 2, "note" + i, "path" + i, "server" + i,
-                            "admin" + i, new Date(), new Date(), new Date(), 1, "thumb", "review"));
+            BookEntity book = new BookEntity();
+            book.setSubject("subject"+i);
+            book.setAuthor("author");
+            book.setBook_type(1);
+            book.setFile_path("file_path");
+            book.setFile_orign_name("file_original.pdf");
+            book.setFuture_date(new Date());
+            book.setReg_date(new Date());
+            book.setRead_status(1);
+            list.add(book);
         }
         bookRepository.save(list);
     }
