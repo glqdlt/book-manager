@@ -16,7 +16,7 @@
     <link th:href="@{/assets/vendor/font-awesome/css/font-awesome.min.css}" rel="stylesheet" type="text/css">
     <!-- Custom styles for this template-->
     <link th:href="@{/assets/css/sb-admin.css}" rel="stylesheet">
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/css/bootstrap-datepicker.css">
     <script src="/webjars/vue/2.3.4/dist/vue.min.js"></script>
     <style>
         .thumb {
@@ -176,16 +176,60 @@
                         <label>Subject</label><input class="form-control" type="text"/>
                     </div>
                     <div class="form-group">
-                       <label>Ahtur</label><input class="form-control" type="text"/>
+                        <label>Author</label><input class="form-control" type="text"/>
                     </div>
+
+                    <div class="form-group">
+                        <label>Book Type</label>
+                        <select>
+                            <option value="1">일반</option>
+                            <option value="2">전공</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Note</label><input class="form-control" type="text"/>
+                    </div>
+                    <div class="form-group">
+                        <label>Readable</label>
+                        <select>
+                            <option value="1">안읽음</option>
+                            <option value="2">읽는중</option>
+                            <option value="3">읽음</option>
+                        </select>
+                    </div>
+
+
                     <div class="form-group">
                         <label>Thumbnail-Image</label><input type="file" name="thumbnail-image"
                                                              onchange="onChangedFiles(this.files)">
                         <div id="thumb-area"></div>
                     </div>
+
+                    <div class="form-group">
+                        <label>
+                            Future Date
+                        </label>
+                        <input type="text" class="form-control" id="datepicker">
+                    </div>
+
+                    <div class="form-group">
+                        <label>
+                            NAS
+                        </label>
+                        <input name="archive" type="radio" value="1" checked="checked">
+                        <label>
+                            Online
+                        </label>
+                        <input name="archive" type="radio" value="2">
+                    </div>
                     <div class="form-group">
                         <label>Attach-File</label><input name="attach-file" type="file"/>
                     </div>
+                    <div class="form-group">
+                        <label>Url</label>
+                        <input class="form-control" type="text" placeholder="Input book's sell url..">
+                    </div>
+
                     <button class="btn btn-primary" type="submit">Submit</button>
                 </form>
                 <div id="spinner-zone" style="display: none">
@@ -232,8 +276,10 @@
             </div>
         </div>
     </div>
-    <!-- Bootstrap core JavaScript-->
     <script src="/assets/vendor/jquery/jquery.min.js"></script>
+    <!--datepicker-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.min.js"></script>
+    <!-- Bootstrap core JavaScript-->
     <script src="/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <!-- Core plugin JavaScript-->
     <script src="/assets/vendor/jquery-easing/jquery.easing.min.js"></script>
@@ -244,6 +290,8 @@
     <!--https://stackoverflow.com/questions/13556812/using-this-with-filereader-to-target-result-->
     <!--https://developer.mozilla.org/ko/docs/Web/API/FileReader/readAsDataURL-->
     <script>
+
+        $('#datepicker').datepicker();
 
         $('#myForm').submit(function (e) {
             e.preventDefault();
